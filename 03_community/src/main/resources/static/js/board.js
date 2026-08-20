@@ -68,7 +68,7 @@ if (commentForm) {
 				return;
 			}
 			
-			// TODO: 응답 결과를 화면에 표시
+			// 응답 결과를 화면에 표시
 			// alert("댓글 작성 성공");
 			appendComment(result.data);
 			
@@ -100,6 +100,9 @@ function appendComment(comment) {
 	// => dataset 을 사용하면 data-* 속성으로 추가될 것임.
 	
 	commentList.appendChild(cloneComment);
+	
+	// TODO: 댓글 추가 후 댓글 개수 변경
+	updateCommentCount();
 }
 
 
@@ -135,6 +138,9 @@ if (commentList) {
 			
 			// 화면상에서 해당 댓글 제거
 			document.querySelector(`#comment-${commentId}`).remove();
+			
+			// TODO: 댓글 삭제 시 개수 변경
+			updateCommentCount();
 		} catch (error) {
 			alert("댓글 삭제 중 오류가 발생했습니다.");
 		}
@@ -142,7 +148,10 @@ if (commentList) {
 	
 }
 
-
+function updateCommentCount() {
+	const commentCount = document.querySelectorAll(".comment-list li")?.length || 0;
+	document.querySelector(".comment-section_title").textContent = `댓글 ${commentCount}`;
+}
 
 
 
