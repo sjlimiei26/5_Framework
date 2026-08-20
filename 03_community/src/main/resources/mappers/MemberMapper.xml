@@ -29,6 +29,17 @@
 		DELETE FROM TB_MEMBER WHERE MEMBER_ID = #{memberId}
 	</delete>
 	
+	<update id="updateMember" parameterType="MemberRequest">
+		UPDATE TB_MEMBER
+		   <set>
+		   	<if test="memberName != null">MEMBER_NAME = #{memberName},</if>
+		   	<if test="nickname != null">NICKNAME = #{nickname},</if>
+		   	<if test="email != null">EMAIL = #{email},</if>
+		   	<if test="profile != null">PROFILE = #{profile}</if>
+		   </set>
+		 WHERE MEMBER_ID = #{memberId}
+	</update>
+	
 </mapper>
 
 

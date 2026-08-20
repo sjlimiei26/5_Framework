@@ -3,6 +3,7 @@ package com.kh.community.member.model.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.community.member.model.dto.MemberDTO;
+import com.kh.community.member.model.dto.MemberRequest;
 
 @Mapper
 public interface MemberMapper {
@@ -19,6 +20,8 @@ public interface MemberMapper {
 	// 아이디를 기준으로 회원 삭제 -> 데이터를 삭제
 	int deleteMember(String memberId);
 	
+	// 회원 정보 수정
+	int updateMember(MemberRequest member);
 }
 
 

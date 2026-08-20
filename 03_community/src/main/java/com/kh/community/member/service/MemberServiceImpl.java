@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.community.common.util.FileUploadUtil;
 import com.kh.community.common.util.SavedFile;
 import com.kh.community.member.model.dto.MemberDTO;
+import com.kh.community.member.model.dto.MemberRequest;
 import com.kh.community.member.model.mapper.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -88,5 +89,33 @@ public class MemberServiceImpl implements MemberService {
 			uploadUtil.delete(profile, profileUploadDir);
 		}
 	}
+
+	@Override
+	public MemberDTO update(MemberRequest member) throws IllegalStateException, IOException {
+		System.out.println(member);
+		// 수정 항목 검사
+		if (member == null || (member.getMemberName() == null && member.getNickname() == null && member.getEmail() == null)) {
+			throw new IllegalArgumentException("수정할 항목이 없습니다.");
+		}
+		
+		
+		// 프로필 이미지 파일을 "서버"에 저장 --> 공통 클래스로 분리
+		SavedFile saved = uploadUtil.save(member.getProfileImage(), profileUploadDir, "/uploads/profile");
+		if (saved != null) {
+			// 기존에 저장된 이미지가 있으면 제거
+			if (member.getProfile() != null) {
+				uploadUtil.delete(member.getProfile(), profileUploadDir);
+			}
+			
+			// 저장된 경로를 dto에 설정
+			member.setProfile( saved.getPath() );
+		}
+		
+		// DB에 저장
+		mapper.updateMember(member);
+		
+		return mapper.selectByMemberId(member.getMemberId());
+	}
+	
 
 }

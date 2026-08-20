@@ -2,6 +2,8 @@ package com.kh.community.member.controller;
 
 import java.io.IOException;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.community.common.SessionConst;
 import com.kh.community.common.dto.ApiResponse;
 import com.kh.community.member.model.dto.MemberDTO;
+import com.kh.community.member.model.dto.MemberRequest;
 import com.kh.community.member.service.MemberService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -138,6 +141,29 @@ public class MemberController {
 		
 		// 메인 페이지로 리다이렉트
 		return "redirect:/";
+	}
+	
+	
+	@PostMapping(value="/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<ApiResponse<MemberDTO>> 
+		updateMember(@ModelAttribute MemberRequest member, HttpSession session) {
+		
+		MemberDTO loginMember = (MemberDTO) session.getAttribute(SessionConst.LOGIN_MEMBER);
+		try {
+			member.setMemberId(loginMember.getMemberId());
+			MemberDTO updateMember = service.update(member);
+			
+			// 세션에도 다시 저장
+			session.setAttribute(SessionConst.LOGIN_MEMBER, updateMember);
+			
+			return ResponseEntity.ok(ApiResponse.success("정상적으로 수정되었습니다.", updateMember));
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body(ApiResponse.fail(e.getMessage()));
+		} catch (IllegalStateException e) {
+			return ResponseEntity.badRequest().body(ApiResponse.fail(e.getMessage()));
+		} catch (IOException e) {
+			return ResponseEntity.internalServerError().body(ApiResponse.fail(e.getMessage()));
+		}
 	}
 }
 

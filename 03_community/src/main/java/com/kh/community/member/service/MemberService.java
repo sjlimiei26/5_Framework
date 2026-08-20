@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.community.member.model.dto.MemberDTO;
+import com.kh.community.member.model.dto.MemberRequest;
 
 /*
  * * 서비스 인터페이스
@@ -26,6 +27,9 @@ public interface MemberService {
 	
 	// 회원 탈퇴
 	void withdraw(String memberId);
+	
+	// 회원 정보 수정
+	MemberDTO update(MemberRequest member) throws IllegalStateException, IOException;
 	
 }
 
