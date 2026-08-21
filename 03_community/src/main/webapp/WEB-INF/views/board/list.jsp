@@ -48,7 +48,9 @@
 					 <tbody>
 						<c:forEach var="board" items="${boardList}" varStatus="status">
 							<tr onclick="location.href = '/board/detail/${board.boardId}'">
-								<td class="board-table_col-no">${board.boardId}</td>
+								<td class="board-table_col-no">
+									${pageInfo.totalCount - (pageInfo.page -1) * pageInfo.size - status.index}
+								</td>
 								<td class="board-table_col-category">
 									<span class="board-table_category">${board.category}</span>
 								</td>
@@ -64,24 +66,32 @@
 		</c:otherwise>	
 	</c:choose>
 	
-	<%-- 페이징 바 영역 -- %>
+	<%-- 페이징 바 영역 --%>
 	<nav class="pagenation">
 		<%-- 이전 페이지 그룹이 있을 경우 표시 --%>
-        <a class="pagenation-item"
-           href="/board/list"
-        ><<</a>
+		<c:if test="${pageInfo.hasPrevGroup}">
+	        <a class="pagenation-item"
+	           href="/board/list?page=${pageInfo.startPage - 1}&searchType=${condition.searchType}&category=${condition.category}&keyword=${condition.keyword}"
+	        ><<</a>
+		</c:if>
     	<%-- ------- --%>
 		
 		<%-- 현재 페이지 그룹 만큼 표시 --%>
-        <a class="pagenation-item pagenation-item_active"
-           href="/board/list"
-        >X</a>
+		<c:forEach var="p" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+		
+	        <a class="pagenation-item ${p == pageInfo.page ? 'pagenation-item_active' : ''}"
+	           href="/board/list?page=${p}&searchType=${condition.searchType}&category=${condition.category}&keyword=${condition.keyword}"
+	        >${p}</a>
+		
+		</c:forEach>
 		<%-- -------- --%>
 		
 		<%-- 다음 페이지 그룹이 있을 경우 표시 --%>
-        <a class="pagenation-item"
-           href="/board/list"
-        >>></a>
+		<c:if test="${pageInfo.hasNextGroup}">
+	        <a class="pagenation-item"
+	           href="/board/list?page=${pageInfo.endPage + 1}&searchType=${condition.searchType}&category=${condition.category}&keyword=${condition.keyword}"
+	        >>></a>
+		</c:if>
     	<%-- -------- --%>
 	</nav>	
 
