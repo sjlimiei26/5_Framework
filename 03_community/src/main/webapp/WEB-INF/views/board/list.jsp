@@ -63,6 +63,27 @@
 			</div>
 		</c:otherwise>	
 	</c:choose>
+	
+	<%-- 페이징 바 영역 -- %>
+	<nav class="pagenation">
+		<%-- 이전 페이지 그룹이 있을 경우 표시 --%>
+        <a class="pagenation-item"
+           href="/board/list"
+        ><<</a>
+    	<%-- ------- --%>
+		
+		<%-- 현재 페이지 그룹 만큼 표시 --%>
+        <a class="pagenation-item pagenation-item_active"
+           href="/board/list"
+        >X</a>
+		<%-- -------- --%>
+		
+		<%-- 다음 페이지 그룹이 있을 경우 표시 --%>
+        <a class="pagenation-item"
+           href="/board/list"
+        >>></a>
+    	<%-- -------- --%>
+	</nav>	
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
