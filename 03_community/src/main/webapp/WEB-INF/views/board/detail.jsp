@@ -10,8 +10,8 @@
             <span>${board.category}</span>
             <h2>${board.title}</h2>
             <div>
-                <span>${board.writerNickname}</span>
-                <span>${board.createAtStr}</span>
+                <span>${board.writerNickname}</span> |
+                <span>${board.createAtStr}</span> |
                 <span>조회 ${board.count}</span>
             </div>
         </header>
@@ -31,6 +31,7 @@
 		<%-- 작성자인 경우 표시 --%>
 		<c:if test="${isOwner}">
 			<div class="board-detail_actions">
+				<a class="btn btn-ouline" href="/board/edit/${board.boardId}">수정</a>
 				<form action="/board/delete/${board.boardId}" method="post"
 					onsubmit="return confirm('게시글을 삭제하시겠습니까?')">
 					<button type="submit" class="btn btn-danger">삭제</button>

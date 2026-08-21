@@ -55,6 +55,25 @@
 	<delete id="deleteBoard">
 		DELETE FROM TB_BOARD WHERE BOARD_ID = #{boardId}
 	</delete>
+	
+	<update id="updateBoard" parameterType="BoardDTO">
+		UPDATE TB_BOARD
+		<!-- 
+			set 태그 : update 문의 set 절에서, 조건에 해당하는(값이 있는) 컬럼만 업데이트하고
+					  마지막 컬럼 뒤에 남는 콤마(,)는 자동으로 제거해줌.
+			※ 수정일 컬럼은 트리거를 추가함. (참고: schema.sql)	  
+		-->
+		<set>
+			<if test="title != null">TITLE = #{title},</if>
+			<if test="content != null">CONTENT = #{content},</if>
+			<if test="category != null">CATEGORY = #{category},</if>
+		</set>
+		WHERE BOARD_ID = #{boardId}
+	</update>
+	
+	<delete id="deleteBoardImage" parameterType="long">
+		DELETE FROM TB_BOARD_IMAGE WHERE BOARD_ID = #{boardId}
+	</delete>
 </mapper>
 
 

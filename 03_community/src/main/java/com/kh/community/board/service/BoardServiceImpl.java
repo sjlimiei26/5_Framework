@@ -68,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
 										order++,
 										null
 										);
-			
+										
 			// DB에 게시글 이미지 저장
 			mapper.insertBoardImage(boardImage);
 		}
@@ -99,13 +99,59 @@ public class BoardServiceImpl implements BoardService {
 		mapper.deleteBoard(boardId);
 		
 		// 회원탈퇴처럼.. 이미지 서버에서 삭제
-		if (images != null && !images.isEmpty()) {
-			for (BoardImageDTO image : images) {
-				fileUploadUtil.delete(image.getImagePath(), boardUploadDir);
-			}
+		deleteImageFiles(images);
+	}
+
+	@Override
+	public void updateBoard(Long boardId, BoardDTO board, List<MultipartFile> newImages, String requestMemberId)
+			throws IOException {
+		// 기존에 저장된 게시글 정보 조회
+		BoardDTO original = mapper.selectBoardDetail(boardId);
+		
+		// 게시글 및 작성자 검증
+		if (original == null) {
+			throw new IllegalArgumentException("존재하지 않는 게시글입니다.");
+		}
+		if (original.getMemberId() == null || !original.getMemberId().equals(requestMemberId)) {
+			throw new SecurityException("본인이 작성한 게시글만 수정할 수 있습니다.");
+		}
+		
+		// 게시글 정보 수정
+		board.setBoardId(boardId);
+		mapper.updateBoard(board);
+		
+		// 추가된 이미지가 있을 경우 처리 (서버에 반영, 디비에 반영)
+		if (hasImages(newImages)) {
+			
+			List<BoardImageDTO> images = mapper.selectImagesByBoardId(boardId);
+			// 해당 게시글의 이미지 정보를 조회한 후 서버에서 삭제
+			deleteImageFiles(images);
+			
+			// DB에서도 삭제
+			mapper.deleteBoardImage(boardId);
+
+			// 새로운 이미지 저장
+			saveImages(boardId, newImages);
 		}
 	}
 	
+	private boolean hasImages(List<MultipartFile> images) {
+		boolean hasImage = false;
+		
+		for(MultipartFile img : images) {
+			if (img != null && !img.isEmpty()) hasImage = true;
+		}
+	
+		return hasImage;
+	}
+	
+	private void deleteImageFiles(List<BoardImageDTO> images) {
+		if (images != null && !images.isEmpty()) {
+			for(BoardImageDTO img : images) {
+				fileUploadUtil.delete(img.getImagePath(), boardUploadDir);
+			}
+		}
+	}
 	
 
 }

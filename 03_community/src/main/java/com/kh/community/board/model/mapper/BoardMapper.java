@@ -29,6 +29,12 @@ public interface BoardMapper {
 	
 	// 게시글 삭제 (DML - delete)
 	int deleteBoard(Long boardId);
+	
+	// 게시글 수정 (DML - update)
+	int updateBoard(BoardDTO board);
+	
+	// 게시글 이미지 삭제
+	int deleteBoardImage(Long boardId);
 }
 
 

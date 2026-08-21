@@ -69,6 +69,26 @@ public class BoardController {
 		
 		return "board/detail";
 	}
+	
+	@GetMapping("/edit/{boardId}")
+	public String editBoard(@PathVariable Long boardId,
+							HttpSession session,
+							Model model) {
+		// 해당 게시글 정보 조회
+		BoardDTO board = service.getBoardDetail(boardId);
+		
+		// 로그인 한 사용자와 게시글 작성자 일치 여부 확인
+		MemberDTO loginMember = (MemberDTO) session.getAttribute(SessionConst.LOGIN_MEMBER);
+		if (loginMember == null || !loginMember.getMemberId().equals(board.getMemberId()) ) {
+			throw new SecurityException("본인이 작성한 게시글만 수정할 수 있습니다.");
+		}
+		
+		// 게시글 정보와 수정 모드 저장
+		model.addAttribute("mode", "edit");
+		model.addAttribute("board", board);
+		
+		return "board/form";
+	}
 	// -----------------------------
 	
 	@PostMapping("/write")
@@ -90,6 +110,19 @@ public class BoardController {
 		service.deleteBoard(boardId);
 		
 		return "redirect:/board/list";
+	}
+	
+	@PostMapping("/edit/{boardId}")
+	public String edit(@PathVariable Long boardId,
+						@ModelAttribute BoardDTO board,
+						@RequestParam(value="imageFiles", required=false) List<MultipartFile> images,
+						HttpSession session) throws IOException {
+		MemberDTO loginMember = (MemberDTO)session.getAttribute(SessionConst.LOGIN_MEMBER);
+		
+		service.updateBoard(boardId, board, images, loginMember.getMemberId());
+		
+		// 해당 게시글 상세 페이지로 리다이렉트
+		return "redirect:/board/detail/" + boardId;
 	}
 }
 

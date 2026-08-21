@@ -21,6 +21,9 @@ public interface BoardService {
 	// 게시글 삭제
 	void deleteBoard(Long boardId);
 	
+	// 게시글 수정
+	void updateBoard(Long boardId, BoardDTO board, List<MultipartFile> newImages, String requestMemberId) throws IOException;
+	
 }
 
 
