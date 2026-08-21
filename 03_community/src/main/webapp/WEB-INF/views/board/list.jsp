@@ -9,6 +9,25 @@
 		<a class="btn btn-outline" href="/board/write">글쓰기</a>
 	</h4>
 	
+	<!-- 검색 영역 -->
+	<form class="search-bar" action="/board/list" method="get">
+	    <select name="category" class="search-bar__select">
+	        <option value="전체" ${condition.category == '전체' ? 'selected' : ''}>전체</option>
+	        <option value="자유" ${condition.category == '자유' ? 'selected' : ''}>자유</option>
+	        <option value="질문" ${condition.category == '질문' ? 'selected' : ''}>질문</option>
+	        <option value="공지" ${condition.category == '공지' ? 'selected' : ''}>공지</option>
+	    </select>
+	    <select name="searchType" class="search-bar__select">
+	        <option value="titleContent" ${condition.searchType == 'titleContent' ? 'selected' : ''}>제목+내용</option>
+	        <option value="title" ${condition.searchType == 'title' ? 'selected' : ''}>제목</option>
+	        <option value="content" ${condition.searchType == 'content' ? 'selected' : ''}>내용</option>
+	        <option value="writer" ${condition.searchType == 'writer' ? 'selected' : ''}>작성자</option>
+	    </select>
+	    <input type="text" class="search-bar__input" name="keyword" value="${condition.keyword}" placeholder="검색어를 입력하세요.">
+	    <button type="submit" class="btn btn-primary">검색</button>
+	</form>	
+	
+	
 	<c:choose>
 		<c:when test="${empty boardList}">
 			<p>등록된 게시글이 없습니다.</p>

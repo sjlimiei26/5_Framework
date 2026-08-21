@@ -4,12 +4,36 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.community.board.model.mapper.BoardMapper">
 
-	<select id="selectBoardList" resultType="BoardDTO">
+	<select id="selectBoardList" parameterType="BoardSearchCondition" resultType="BoardDTO">
 		SELECT BOARD_ID, B.MEMBER_ID, CATEGORY, TITLE, COUNT, B.CREATE_AT, UPDATE_AT,
 		        TO_CHAR(B.CREATE_AT, 'YYYY-MM-DD HH24:MI') AS CREATE_AT_STR,
 		        NVL(M.NICKNAME, '탈퇴한 회원') AS WRITER_NICKNAME
 		  FROM TB_BOARD B
 		    LEFT JOIN TB_MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
+		<where>
+			<if test="category != null and category != '' and category != '전체'">
+				AND B.CATEGORY = #{category}
+			</if>
+			
+			<if test="keyword != null and keyword != ''">
+				<choose>
+					<when test="searchType == 'title'">
+						AND B.TITLE LIKE '%' || #{keyword} || '%'
+					</when>
+					<when test="searchType == 'content'">
+						AND B.CONTENT LIKE '%' || #{keyword} || '%'
+					</when>
+					<when test="searchType == 'writer'">
+						AND M.NICKNAME LIKE '%' || #{keyword} || '%'
+					</when>
+					<otherwise>
+						AND (B.TITLE LIKE '%' || #{keyword} || '%'
+							OR B.CONTENT LIKE '%' || #{keyword} || '%')
+					</otherwise>
+				</choose>
+			</if>
+		</where>    
+		    
 		ORDER BY BOARD_ID DESC
 	</select>
 	

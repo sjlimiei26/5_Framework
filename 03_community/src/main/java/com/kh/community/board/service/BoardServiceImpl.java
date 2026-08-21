@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.community.board.model.dto.BoardDTO;
 import com.kh.community.board.model.dto.BoardImageDTO;
+import com.kh.community.board.model.dto.BoardSearchCondition;
 import com.kh.community.board.model.mapper.BoardMapper;
 import com.kh.community.common.util.FileUploadUtil;
 import com.kh.community.common.util.SavedFile;
@@ -27,8 +28,10 @@ public class BoardServiceImpl implements BoardService {
 	private String boardUploadDir;
 
 	@Override
-	public List<BoardDTO> getBoardList() {
-		return mapper.selectBoardList();
+	public List<BoardDTO> getBoardList(BoardSearchCondition condition) {
+		
+		return mapper.selectBoardList(condition);
+		
 	}
 
 	@Override
