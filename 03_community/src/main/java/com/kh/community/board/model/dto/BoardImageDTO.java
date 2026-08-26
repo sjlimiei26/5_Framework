@@ -2,6 +2,8 @@ package com.kh.community.board.model.dto;
 
 import java.time.LocalDateTime;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Alias("BoardImageDTO")
 public class BoardImageDTO {
 	// TB_BOARD_IMAGE 테이블 기준으로 작성
 	private Long imageId;

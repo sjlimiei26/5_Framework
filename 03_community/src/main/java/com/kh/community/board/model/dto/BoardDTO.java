@@ -3,6 +3,8 @@ package com.kh.community.board.model.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Alias("BoardDTO")
 public class BoardDTO {
 	// TB_BOARD 테이블 기준으로 필드를 추가
 	private Long boardId;

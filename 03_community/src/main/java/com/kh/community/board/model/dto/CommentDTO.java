@@ -2,6 +2,8 @@ package com.kh.community.board.model.dto;
 
 import java.time.LocalDateTime;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Alias("CommentDTO")
 public class CommentDTO {
 	// TB_COMMENT 기준으로 필드 정의
 	private Long commentId;

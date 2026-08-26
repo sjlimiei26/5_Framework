@@ -2,6 +2,8 @@ package com.kh.community.member.model.dto;
 
 import java.time.LocalDateTime;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
+@Alias("MemberDTO")
 public class MemberDTO {
 	// TB_MEMBER 테이블을 기준으로 필드를 정의
 	private String memberId;
