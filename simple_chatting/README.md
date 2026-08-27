@@ -47,6 +47,43 @@ javascript 내장 객체인 `WebSocket` 을 사용하여 통신합니다.
 - 2 : CLOSING - 연결 종료 중
 - 3 : CLOSED - 연결 종료 또는 실패
 
+#### 참고 예시
+```javascript
+const socket = new WebSocket("ws://localhost:8080/chatting");
+
+// 웹 소켓 연결
+socket.onopen = (event) => {
+    console.log("웹 소켓 연결 성공");
+
+    // 메시지 전송    
+    socket.send("Hello?");
+    
+};
+
+// 연결 상태 확인 후 메시지 전송
+if (socket.readyState === WebSocket.OPEN) {
+    socket.send("Hi!");
+} else {
+    console.log("웹 소켓이 연결되지 않았습니다.");
+}
+
+// 메시지 수신
+socket.onmessage = (event) => {
+    console.log("수신 메시지: " + event.data);
+};
+
+// 연결 종료
+socket.onclose = (event) => {
+    console.log("웹 소켓 연결 종료");
+};
+
+// 오류 
+socket.onerror = (error) => {
+    console.error("웹 소켓 오류 발생!");
+    console.error(error);
+};
+```
+
 
 ### 서버 (Server)
 웹 소켓 통신을 위한 별도의 설정을 추가해야 합니다.
