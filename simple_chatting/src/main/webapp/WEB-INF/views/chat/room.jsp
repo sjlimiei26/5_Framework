@@ -11,7 +11,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>오픈 채팅방</title>
+  <title>Simple Chatting</title>
   <link rel="stylesheet" href="/css/chat.css">
 </head>
 <body>
@@ -31,14 +31,7 @@
       </header>
 
       <!-- 메시지 목록 영역 -->
-      <main class="chat-messages" id="chatMessages">
-        <div class="system-message">${nickname}님이 채팅방에 입장하셨습니다.</div>
-        <div class="message-wrapper bot">
-          <span class="sender-name">채팅관리자</span>
-          <div class="message-bubble">메시지를 입력해주세요!</div>
-          <span class="message-time">방금 전</span>
-        </div>
-      </main>
+      <main class="chat-messages" id="chatMessages"></main>
 
       <!-- 메시지 입력 폼 -->
       <form class="chat-input-area" id="chatForm">
@@ -56,5 +49,10 @@
     </div>
   </div>
 
+  <script>
+	// 세션에 저장된 사용자 닉네임을 전역 변수로 저장 (외부 자바스크립트 파일에서 사용)
+    const CURRENT_USER = "${sessionScope.nickname}";
+  </script>
+  <script src="/js/chat.js"></script>
 </body>
 </html>
