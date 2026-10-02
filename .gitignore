@@ -13,3 +13,6 @@ build
 *.class
 
 uploads
+
+# easymail-sender application.properties
+easymail-sender/**/application.properties
