@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KH EMS - 효율적인 인사 관리를 위한 직원 관리 시스템 대시보드">
+    <title>Dashboard | KH EMS</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+    <!-- Sidebar Fragment -->
+    <aside th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">대시보드</h1>
+        <!-- ... (이하 생략) ... -->
+
+        <div class="stats-grid">
+            <!-- 직원 수 Card -->
+            <div class="stat-card">
+                <div class="stat-icon icon-blue">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <span class="stat-label">전체 직원 수</span>
+                <div id="emp-count" class="stat-value">0</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>현재 시스템 등록 인원</span>
+                </div>
+            </div>
+
+            <!-- 부서 수 Card -->
+            <div class="stat-card">
+                <div class="stat-icon icon-emerald">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <span class="stat-label">총 부서 수</span>
+                <div id="dept-count" class="stat-value">0</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-check-circle"></i>
+                    <span>운영 중인 부서</span>
+                </div>
+            </div>
+
+            <!-- 직급 수 Card -->
+            <div class="stat-card">
+                <div class="stat-icon icon-amber">
+                    <i class="fas fa-award"></i>
+                </div>
+                <span class="stat-label">총 직급 수</span>
+                <div id="job-count" class="stat-value">0</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-info-circle"></i>
+                    <span>정의된 직급 단계</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Chat Banner (Redirection) -->
+        <section class="chat-section help-banner" onclick="location.href='/chat'"
+            style="cursor: pointer; height: auto; transition: all 0.3s ease;">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="fas fa-robot"></i>
+                    <span>AI 챗봇 상담</span>
+                </div>
+                <div class="chat-status" style="display: flex; align-items: center;">
+                    <span class="status-dot"></span>
+                    <span style="font-size: 0.875rem; color: var(--text-secondary);">Online</span>
+                </div>
+            </div>
+            <div class="chat-body"
+                style="padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--text-primary);">무엇을 도와드릴까요?
+                    </h3>
+                    <p style="margin: 0.5rem 0 0; color: var(--text-secondary); font-size: 0.9375rem;">KH EMS 이용 방법이나 인사
+                        행정 업무에 대해 K-Bot에게 물어보세요.</p>
+                </div>
+                <div class="send-btn"
+                    style="width: auto; padding: 0 1.5rem; height: 3.5rem; border-radius: 1rem; display: flex; align-items: center; gap: 0.75rem; font-weight: 600;">
+                    <span>챗봇 상담 시작</span>
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Custom JS -->
+    <script th:src="@{/js/index.js}"></script>
+</body>
+
+</html>

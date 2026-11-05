@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>직원 관리 | KH EMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+    <!-- Sidebar Fragment -->
+    <aside th:replace="~{fragments/sidebar :: sidebar('employee')}"></aside>
+
+    <main class="main-content">
+        <h1 class="page-title">직원 관리</h1>
+
+        <div class="stat-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>사번</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>전화번호</th>
+                        <th>부서</th>
+                        <th>직급</th>
+                        <th>급여</th>
+                        <th>입사일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}">
+                        <td colspan="8" style="text-align: center;">등록된 직원이 없습니다.</td>
+                    </tr>
+                    <tr th:each="emp : ${list}">
+                        <td th:text="${emp.empId}"></td>
+                        <td th:text="${emp.empName}"></td>
+                        <td th:text="${emp.email}"></td>
+                        <td th:text="${emp.phone}"></td>
+                        <td th:text="${emp.deptTitle}"></td>
+                        <td th:text="${emp.jobName}"></td>
+                        <td th:text="${#numbers.formatDecimal(emp.salary, 0, 'COMMA', 0, 'POINT')} + '원'"></td>
+                        <td th:text="${emp.hireDate}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+
+</html>

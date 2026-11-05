@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KH EMS - AI 챗봇 고객지원">
+    <title>AI Chat Support | KH EMS</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
+</head>
+
+<body>
+    <!-- Sidebar Fragment -->
+    <aside th:replace="~{fragments/sidebar :: sidebar('chat')}"></aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">AI Chat Support</h1>
+
+        <div class="chat-container">
+            <section class="chat-section">
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <i class="fas fa-comments"></i>
+                        <span>🤖 K-Bot | EMS 도우미</span>
+                    </div>
+                </div>
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message received">
+                        <span class="message-info">🤖 K-Bot</span>
+                        안녕하세요! KH EMS 시스템 이용에 대해 궁금한 점이 있으신가요?
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="궁금한 내용을 입력하세요...">
+                    <button id="send-btn" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Custom JS -->
+    <script th:src="@{/js/chat.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.ems.department.model.mapper.DepartmentMapper">
+    <select id="selectAll" resultType="com.kh.ems.department.model.dto.DepartmentDTO">
+        SELECT 
+            DEPT_ID as deptId,
+            DEPT_TITLE as deptTitle,
+            LOCAL_NAME as locationName
+        FROM DEPARTMENT
+            JOIN LOCATION ON LOCATION_ID = LOCAL_CODE
+    </select>
+    <select id="selectCount" resultType="_int">
+        SELECT COUNT(*) FROM DEPARTMENT
+    </select>
+</mapper>

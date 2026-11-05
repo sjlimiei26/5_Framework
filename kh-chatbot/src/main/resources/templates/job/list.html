@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>직급 관리 | KH EMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+    <!-- Sidebar Fragment -->
+    <aside th:replace="~{fragments/sidebar :: sidebar('job')}"></aside>
+
+    <main class="main-content">
+        <h1 class="page-title">직급 관리</h1>
+
+        <div class="stat-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>직급 코드</th>
+                        <th>직급명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}">
+                        <td colspan="2" style="text-align: center;">등록된 직급이 없습니다.</td>
+                    </tr>
+                    <tr th:each="job : ${list}">
+                        <td th:text="${job.jobCode}"></td>
+                        <td th:text="${job.jobName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>부서 관리 | KH EMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+    <!-- Sidebar Fragment -->
+    <aside th:replace="~{fragments/sidebar :: sidebar('department')}"></aside>
+
+    <main class="main-content">
+        <h1 class="page-title">부서 관리</h1>
+
+        <div class="stat-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>부서 코드</th>
+                        <th>부서명</th>
+                        <th>지역명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}">
+                        <td colspan="3" style="text-align: center;">등록된 부서가 없습니다.</td>
+                    </tr>
+                    <tr th:each="dept : ${list}">
+                        <td th:text="${dept.deptId}"></td>
+                        <td th:text="${dept.deptTitle}"></td>
+                        <td th:text="${dept.locationName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+
+</html>
